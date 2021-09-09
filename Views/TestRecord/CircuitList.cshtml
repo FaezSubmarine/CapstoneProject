@@ -1,0 +1,10 @@
+﻿@model List<CapstoneProject.Models.circuit>
+<tbody>
+    @foreach (circuit circ in @Model)
+    {
+        <tr>
+            <td scope="row"> @circ.id </td>
+            <td> @circ.name</td>
+        </tr>
+    }
+</tbody>

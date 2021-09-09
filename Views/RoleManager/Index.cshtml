@@ -1,0 +1,35 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+@{ ViewData["Title"] = "Role Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h3>Role Manager</h3>
+<form method="post" id="add">
+    <div class="input-group">
+        <input name="roleName" class="form-control w-25">
+        <span class="input-group-btn">
+            <button class="btn btn-info" asp-action="AddRole" asp-controller="RoleManager">Add New Role</button>
+        </span>
+    </div>
+</form>
+<form method="post" id="delete">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th>Id</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+<tr>
+    <td>@role.Id</td>
+    <td>@role.Name</td>
+    <td>
+        <button class="btn btn-primary" asp-action="DeleteRole" asp-controller="RoleManager" asp-route-roleName="@role.Name">Delete Role</button>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+</form>

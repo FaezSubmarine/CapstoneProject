@@ -1,0 +1,66 @@
+﻿@model List<CapstoneProject.Models.RaceRequest>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject CapstoneProject.Repository.IUserRepository userRepo
+@{
+    Layout = null;
+}
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">usernameID</th>
+            <th scope="col">circuit</th>
+            <th scope="col">Car</th>
+            <th scope="col">Timing</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (RaceRecords rec in @Model)
+        {
+            <tr>
+                <td scope="row" class="text-black-50"> @rec.id </td>
+                @{
+                    ApplicationUser a = userRepo.GetUsers().Find(e => e.Id == rec.usernameID);
+                }
+                <td scope="row" class="text-black-50"> @(a.FirstName+" "+a.LastName)</td>
+                <td scope="row" class="text-black-50"> @rec.circuit?.name</td>
+                <td scope="row" class="text-black-50"> @rec.carName</td>
+                <td scope="row" class="text-black-50"> @rec.timing</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">usernameID</th>
+            <th scope="col">circuit</th>
+            <th scope="col">Car</th>
+            <th scope="col">Day of Arrival</th>
+            <th scope="col">Time of Arrival</th>
+            <th scope="col">Request Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (RaceRequest rec in ViewBag.reqList)
+        {
+            <tr>
+                <td scope="row"> @rec.id </td>
+                @{
+                    ApplicationUser a = userRepo.GetUsers().Find(e => e.Id == rec.usernameID);
+                }
+                <td class="text-black-50" scope="row"> @(a.FirstName+" "+a.LastName)</td>
+                <td class="text-black-50" scope="row"> @rec.circuit.name</td>
+                <td class="text-black-50" scope="row"> @rec.carName</td>
+                <td class="text-black-50" scope="row"> @rec.dayOfArrival.Date</td>
+                <td class="text-black-50" scope="row"> @(rec.timeOfArrival.ToString("HH:mm"))h</td>
+                <td class="text-black-50" scope="row"> @(rec.requestStatus+" "+rec.declineReason)</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

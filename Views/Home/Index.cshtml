@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject CapstoneProject.Repository.IUserRepository userRepo
+@model List<CapstoneProject.Models.RaceRequest>
+@{
+    ViewData["Title"] = "Home Page";
+    int position = 1;
+}
+
+<body>
+    <div class="fullbody">
+        <div class="TransparentContainer">
+            <div class="text">Welcome to Race Comparer</div>
+            <table class="table table-striped" style="padding-left:20px; padding-right:20px;">
+                <thead>
+                    <tr>
+                        <th scope="col">Position</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Car</th>
+                        <th scope="col">Circuit</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (RaceRecords rec in @Model)
+                    {
+                    <tr>
+                        <td scope="row"> @(position++) </td>
+                        @{
+                            ApplicationUser a = userRepo.GetUsers().Find(e => e.Id == rec.usernameID);
+                        }
+                        <td scope="row"> @(a.FirstName+" "+a.LastName)</td>
+                        <td scope="row"> @rec.carName</td>
+                        <td scope="row"> @rec.circuit.name</td>
+                        <td scope="row"> @rec.timing</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a class="btn bg-light justify-content-md-center" asp-controller="TestRecord" asp-action="add">Click here to book a session!</a>
+        }
+        else
+        {
+            <h4 class="text bg-light">Want to join the leaderboard?</h4>
+            <br />
+            <a class="btn bg-light justify-content-md-center" asp-controller="Account" asp-action="signup">Join Us Now !</a>}
+        }
+    </div>
+
+</body>

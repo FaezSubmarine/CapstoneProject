@@ -1,0 +1,12 @@
+﻿@model CapstoneProject.Models.circuit
+
+<form asp-controller="TestRecord" asp-action="AddCircuit" method="post">
+    <div class="form-group">
+        <label asp-for="name"></label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>
